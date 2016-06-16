@@ -3,6 +3,7 @@ module Api
         public
             def index
                 @mainCourses = MainCourse.where(nil)
+                render json: @mainCourses
             end
             
             def show
@@ -25,6 +26,8 @@ module Api
                         ]
                     }.to_json,
                     :status => 404
+                else
+                    render json: @mainCourse
                 end
             end
     end

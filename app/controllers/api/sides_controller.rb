@@ -3,6 +3,7 @@ module Api
         public
             def index
                 @sides = Side.where(nil)
+                render json: @sides
             end
             
             def show
@@ -25,6 +26,8 @@ module Api
                         ]
                     }.to_json,
                     :status => 404
+                else
+                    render json: @side
                 end
             end
     end

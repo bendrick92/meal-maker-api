@@ -4,28 +4,30 @@ module Api
             def index
                 @meals = Meal.where(nil)
                 
-                filterValue = ""
-                filterType = ""
+                #filterValue = ""
+                #filterType = ""
                 
-                if params[:userId].present?
-                    filterValue = params[:userId]
-                    filterType = "userId"
-                    @meals = @meals.with_user_id(filterValue)
-                end
+                #if params[:userId].present?
+                #    filterValue = params[:userId]
+                #    filterType = "userId"
+                #    @meals = @meals.with_user_id(filterValue)
+                #end
                 
-                if @meals.blank?
-                    render :json => {
-                        :errors => [
-                            {
-                                :status => "404",
-                                :source => "/api/meals/#{params[:id]}",
-                                :title => "not-found",
-                                :detail => "Meal with a #{filterType} of #{filterValue} could not be found"
-                            }
-                        ]
-                    }.to_json,
-                    :status => 404
-                end
+                #if @meals.blank?
+                #    render :json => {
+                #        :errors => [
+                #            {
+                #                :status => "404",
+                #                :source => "/api/meals/#{params[:id]}",
+                #                :title => "not-found",
+                #                :detail => "Meal with a #{filterType} of #{filterValue} could not be found"
+                #            }
+                #        ]
+                #    }.to_json,
+                #    :status => 404
+                #else
+                    render json: @meals
+                #end
             end
             
             def show
@@ -48,6 +50,8 @@ module Api
                         ]
                     }.to_json,
                     :status => 404
+                else
+                    render json: @meal
                 end
             end
     end

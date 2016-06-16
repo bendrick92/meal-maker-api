@@ -18,52 +18,40 @@ ActiveRecord::Schema.define(version: 20160523160618) do
 
   create_table "main_courses", force: :cascade do |t|
     t.text     "description"
-    t.boolean  "isActive"
+    t.boolean  "is_active"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "meals_id"
   end
-
-  add_index "main_courses", ["meals_id"], name: "index_main_courses_on_meals_id", using: :btree
 
   create_table "meal_types", force: :cascade do |t|
     t.text     "description"
-    t.boolean  "isActive"
+    t.boolean  "is_active"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "meals_id"
   end
-
-  add_index "meal_types", ["meals_id"], name: "index_meal_types_on_meals_id", using: :btree
 
   create_table "meals", force: :cascade do |t|
-    t.integer  "mealTypeId"
-    t.integer  "userId"
-    t.integer  "mainCourseId"
-    t.integer  "sideId"
-    t.boolean  "isPublic"
-    t.boolean  "isActive"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "meal_type_id"
+    t.integer  "main_course_id"
+    t.integer  "side_id"
+    t.boolean  "is_public"
+    t.boolean  "is_active"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
+
+  add_index "meals", ["main_course_id"], name: "index_meals_on_main_course_id", using: :btree
+  add_index "meals", ["meal_type_id"], name: "index_meals_on_meal_type_id", using: :btree
+  add_index "meals", ["side_id"], name: "index_meals_on_side_id", using: :btree
 
   create_table "sides", force: :cascade do |t|
     t.text     "description"
-    t.boolean  "isActive"
+    t.boolean  "is_active"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "meals_id"
   end
 
-  add_index "sides", ["meals_id"], name: "index_sides_on_meals_id", using: :btree
-
-  create_table "users", force: :cascade do |t|
-    t.string   "username"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "meals_id"
-  end
-
-  add_index "users", ["meals_id"], name: "index_users_on_meals_id", using: :btree
-
+  add_foreign_key "meals", "main_courses"
+  add_foreign_key "meals", "meal_types"
+  add_foreign_key "meals", "sides"
 end
